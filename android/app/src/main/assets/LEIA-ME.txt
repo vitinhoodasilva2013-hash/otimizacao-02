@@ -1,0 +1,2 @@
+Coloque aqui os arquivos gerados por `npm run build` na pasta frontend/dist.
+O arquivo index.html precisa ficar diretamente nesta pasta assets.
