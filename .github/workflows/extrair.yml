@@ -1,0 +1,36 @@
+
+name: Extrair projeto OTIMIZACAO 0.2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extrair:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar arquivos do repositorio
+        uses: actions/checkout@v4
+
+      - name: Extrair projeto
+        run: |
+          ZIP=$(find . -maxdepth 1 -name '*.zip' | head -n 1)
+          if [ -z "$ZIP" ]; then
+            echo "Arquivo ZIP nao encontrado"
+            exit 1
+          fi
+          mkdir -p /tmp/projeto
+          unzip -o "$ZIP" -d /tmp/projeto
+          cp -R /tmp/projeto/. .
+
+      - name: Salvar arquivos extraidos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Extrair projeto OTIMIZACAO 0.2"
+          git push
+          
